@@ -4,7 +4,7 @@ The Project Idea is to Create auto short story by photo by using `Socket.io`
 
 ## workflow
 
-![socket io work flow](public\socket.io-workflow.png)
+![socket io work flow](/public/socket.io-workflow.png)
 
 ## Run the Server
 
