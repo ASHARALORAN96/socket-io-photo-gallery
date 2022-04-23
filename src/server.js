@@ -13,11 +13,11 @@ app.use(cors());
 app.use(express.static("public"));
 
 const ImagesArr = getImageFromFolder(dirPath).sort((a, b) => a - b);
-let index;
+let interval, index;
 
 // keep increaseing the index
 function callInterval() {
-  setInterval(() => {
+  interval = setInterval(() => {
     index++;
     if (index === ImagesArr.length) index = 0;
   }, 2000);
@@ -29,7 +29,11 @@ io.on("connection", (socket) => {
     index = 0;
     callInterval();
   }
-  setInterval(() => {
+  const socketInterval = setInterval(() => {
     socket.emit("renderImg", ImagesArr[index]);
+  });
+  io.on("disconnected", () => {
+    clearInterval(interval);
+    clearInterval(socketInterval)
   });
 });
