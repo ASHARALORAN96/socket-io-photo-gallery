@@ -1,0 +1,10 @@
+#story-header{
+    text-align: center;
+}
+#photoSlider{
+    width: 700px;
+    height: 500px;
+    border: 2px solid gray;
+    background-repeat: no-repeat;
+    margin: auto;
+}
