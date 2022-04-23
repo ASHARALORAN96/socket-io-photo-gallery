@@ -32,7 +32,7 @@ io.on("connection", (socket) => {
   const socketInterval = setInterval(() => {
     socket.emit("renderImg", ImagesArr[index]);
   });
-  io.on("disconnected", () => {
+  socket.on("disconnected", () => {
     clearInterval(interval);
     clearInterval(socketInterval)
   });
