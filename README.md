@@ -1,4 +1,4 @@
-# socket-io-photo-gallery
+# Short Story Socket.io
 
 The Project Idea is to Create auto short story by photo by using `Socket.io`
 
