@@ -13,15 +13,14 @@ app.use(cors());
 app.use(express.static("public"));
 
 const ImagesArr = getImageFromFolder(dirPath).sort((a, b) => a - b);
-const interval = 2000;
 let index;
 
-// keeping increase the index
+// keep increaseing the index
 function callInterval() {
   setInterval(() => {
     index++;
-    if (index === 13) index = 0;
-  }, interval);
+    if (index === ImagesArr.length) index = 0;
+  }, 2000);
 }
 
 // --- Socket events ---//
