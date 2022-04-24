@@ -18,16 +18,6 @@ const io = socket(server , {
 app.use(indexRoute)
 app.use(express.static("public"));
 
-// const socketConnection = {
-//   instanceValue: null,
-//   get instance() {
-//     if (!this.instanceValue) {
-//       this.instanceValue = io;
-//     }
-//     return this.instanceValue;
-//   },
-// };
-
 const ImagesArr = getImageFromFolder(dirPath).sort((a, b) => a - b);
 let interval, index;
 
