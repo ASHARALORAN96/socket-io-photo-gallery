@@ -2,17 +2,31 @@ require('dotenv').config();
 
 const express = require("express");
 const socket = require("socket.io");
-const cors = require("cors");
+const http = require('http')
+const fs= require('fs')
 const { dirPath, getImageFromFolder } = require("./helper");
-
 const port = process.env.PORT || 5050;
+const indexRoute = require('./router')
+
 const app = express();
-const server = app.listen(port);
-const io = socket(server);
+const server = http.createServer(app);
+const io = socket(server , {
+  cors: { origin: "*" }
+});
 
 // Express middlewares
-app.use(cors());
+app.use(indexRoute)
 app.use(express.static("public"));
+
+// const socketConnection = {
+//   instanceValue: null,
+//   get instance() {
+//     if (!this.instanceValue) {
+//       this.instanceValue = io;
+//     }
+//     return this.instanceValue;
+//   },
+// };
 
 const ImagesArr = getImageFromFolder(dirPath).sort((a, b) => a - b);
 let interval, index;
@@ -25,17 +39,21 @@ function callInterval() {
   }, 2000);
 }
 
-// --- Socket events ---//
 io.on("connection", (socket) => {
+  console.log('new connection')
   if (index === undefined) {
     index = 0;
     callInterval();
-  }
+}
   const socketInterval = setInterval(() => {
-    socket.emit("renderImg", ImagesArr[index]);
+    let base64Img = fs.readFileSync(`public/assets/${ImagesArr[index]}`, "base64");
+    socket.emit("renderImg", base64Img);
   });
-  socket.on("disconnected", () => {
-    clearInterval(interval);
-    clearInterval(socketInterval)
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
   });
 });
+
+server.listen(port, () => console.log(`Listening on port ${port}`));
+
+
