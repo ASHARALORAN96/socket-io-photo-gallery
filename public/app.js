@@ -1,12 +1,12 @@
 const socket = io();
 
 const socketConnection = {
-  instanceV: null,
+  instanceValue: null,
   get instance() {
-    if (!this.instanceV) {
-      this.instanceV = io();
+    if (!this.instanceValue) {
+      this.instanceValue = io();
     }
-    return this.instanceV;
+    return this.instanceValue;
   },
 };
 const photoSlider = document.querySelector("#photoSlider");
